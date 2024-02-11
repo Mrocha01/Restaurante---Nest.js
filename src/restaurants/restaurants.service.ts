@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Restaurant } from './schema/restaurant.schema';
 import mongoose from 'mongoose';
-import { CreateRestaurantDTO } from './create-restaurant.dto';
+import { CreateRestaurantDTO } from './dto/create-restaurant.dto';
 
 @Injectable()
 export class RestaurantsService {
@@ -36,5 +36,16 @@ export class RestaurantsService {
     }
 
     return restaurant;
+  }
+
+  //Update a restaurant by ID => PUT /restaurants/{id}
+  async updateRestaurantById(
+    id: string,
+    restaurant: Restaurant,
+  ): Promise<Restaurant> {
+    return await this.restaurantModel.findByIdAndUpdate(id, restaurant, {
+      new: true,
+      runValidators: true,
+    });
   }
 }

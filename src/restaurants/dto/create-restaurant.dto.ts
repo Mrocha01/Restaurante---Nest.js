@@ -1,4 +1,4 @@
-import { Category } from './schema/restaurant.schema';
+import { Category } from '../schema/restaurant.schema';
 
 export class CreateRestaurantDTO {
   readonly name: string;
