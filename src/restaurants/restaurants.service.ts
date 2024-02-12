@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Restaurant } from './schema/restaurant.schema';
 import mongoose from 'mongoose';
 import { CreateRestaurantDTO } from './dto/create-restaurant.dto';
+import { Query } from 'express-serve-static-core';
 
 @Injectable()
 export class RestaurantsService {
@@ -21,8 +22,17 @@ export class RestaurantsService {
   }
 
   //Get all restaurants => GET /restaurants
-  async findAll(): Promise<Restaurant[]> {
-    const restaurant = await this.restaurantModel.find();
+  async findAll(query: Query): Promise<Restaurant[]> {
+    const keyword = query.keyword
+      ? {
+          name: {
+            $regex: query.keyword,
+            $options: 'i',
+          },
+        }
+      : {};
+
+    const restaurant = await this.restaurantModel.find({ ...keyword });
 
     return restaurant;
   }

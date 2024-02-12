@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { RestaurantsService } from './restaurants.service';
 import { Restaurant } from './schema/restaurant.schema';
 import { CreateRestaurantDTO } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
+import { Query as ExpressQuery } from 'express-serve-static-core';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -24,8 +26,8 @@ export class RestaurantsController {
   }
 
   @Get('all')
-  async getAllRestaurants(): Promise<Restaurant[]> {
-    return this.restaurantsService.findAll();
+  async getAllRestaurants(@Query() query: ExpressQuery): Promise<Restaurant[]> {
+    return this.restaurantsService.findAll(query);
   }
 
   @Get(':id')
