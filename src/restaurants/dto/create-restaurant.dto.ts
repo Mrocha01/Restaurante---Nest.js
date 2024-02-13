@@ -26,7 +26,7 @@ export class CreateRestaurantDTO {
 
   @IsString()
   @IsNotEmpty()
-  readonly adress: string;
+  readonly address: string;
 
   @IsNotEmpty()
   @IsEnum(Category)
