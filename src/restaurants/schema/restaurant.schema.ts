@@ -18,7 +18,7 @@ export class Restaurant {
   email: string;
 
   @Prop()
-  phoneNumber: string;
+  phoneNumber: number;
 
   @Prop()
   adress: string;

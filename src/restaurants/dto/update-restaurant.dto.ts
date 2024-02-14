@@ -7,7 +7,7 @@ export class UpdateRestaurantDto {
 
   readonly email: string;
 
-  readonly phoneNumber: string;
+  readonly phoneNumber: number;
 
   readonly adress: string;
 

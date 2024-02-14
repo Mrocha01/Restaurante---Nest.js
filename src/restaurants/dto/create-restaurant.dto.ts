@@ -16,19 +16,19 @@ export class CreateRestaurantDTO {
   @IsNotEmpty()
   readonly description: string;
 
-  @IsEmail()
+  @IsEmail({}, { message: 'Please enter a valid email address' })
   @IsNotEmpty()
   readonly email: string;
 
   @IsNotEmpty()
-  @IsPhoneNumber()
-  readonly phoneNumber: string;
+  @IsPhoneNumber('BR')
+  readonly phoneNumber: number;
 
   @IsString()
   @IsNotEmpty()
   readonly address: string;
 
   @IsNotEmpty()
-  @IsEnum(Category)
+  @IsEnum(Category, { message: 'Please enter correct category' })
   readonly category: Category;
 }
