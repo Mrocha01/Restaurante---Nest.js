@@ -21,7 +21,7 @@ export class Restaurant {
   phoneNumber: number;
 
   @Prop()
-  adress: string;
+  address: string;
 
   @Prop()
   category: Category;
