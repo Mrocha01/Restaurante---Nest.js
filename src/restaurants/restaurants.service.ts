@@ -8,6 +8,7 @@ import { Restaurant } from './schema/restaurant.schema';
 import mongoose from 'mongoose';
 import { CreateRestaurantDTO } from './dto/create-restaurant.dto';
 import { Query } from 'express-serve-static-core';
+import APIFeatures from '../../utils/apiFeatures.util';
 
 @Injectable()
 export class RestaurantsService {
@@ -20,6 +21,12 @@ export class RestaurantsService {
   async createRestaurant(
     createRestaurantDto: CreateRestaurantDTO,
   ): Promise<Restaurant> {
+    const location = await APIFeatures.getRestaurantLocation(
+      createRestaurantDto.address,
+    );
+
+    console.log(location);
+
     const isValidPhoneNumber = createRestaurantDto.phoneNumber;
 
     if (!Number(isValidPhoneNumber)) {
