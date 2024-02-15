@@ -21,19 +21,19 @@ export class RestaurantsService {
   async createRestaurant(
     createRestaurantDto: CreateRestaurantDTO,
   ): Promise<Restaurant> {
-    const location = await APIFeatures.getRestaurantLocation(
-      createRestaurantDto.address,
-    );
-
-    console.log(location);
-
     const isValidPhoneNumber = createRestaurantDto.phoneNumber;
 
     if (!Number(isValidPhoneNumber)) {
       throw new BadRequestException('Phone number must contain only numbers');
     }
 
-    const restaurant = await this.restaurantModel.create(createRestaurantDto);
+    const location = await APIFeatures.getRestaurantLocation(
+      createRestaurantDto.address,
+    );
+
+    const data = Object.assign(createRestaurantDto, { location });
+
+    const restaurant = await this.restaurantModel.create(data);
 
     return restaurant;
   }
