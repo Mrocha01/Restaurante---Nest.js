@@ -65,7 +65,10 @@ export class RestaurantsController {
     @Param('id') id: string,
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
-    console.log(id);
-    console.log(files);
+    await this.restaurantsService.getRestaurantById(id);
+
+    const res = await this.restaurantsService.uploadImages(id, files);
+
+    return res;
   }
 }

@@ -8,7 +8,7 @@ import { Restaurant } from './schema/restaurant.schema';
 import mongoose from 'mongoose';
 import { CreateRestaurantDTO } from './dto/create-restaurant.dto';
 import { Query } from 'express-serve-static-core';
-import APIFeatures from '../../utils/apiFeatures.util';
+import APIFeatures from './utils/apiFeatures.util';
 
 @Injectable()
 export class RestaurantsService {
@@ -94,5 +94,12 @@ export class RestaurantsService {
     const restaurant = await this.restaurantModel.findByIdAndDelete(id);
 
     return restaurant;
+  }
+
+  // Upload imamges => PUT / restaurants/upload/:id
+  async uploadImages(id, files) {
+    const images = await APIFeatures.upload(files);
+
+    return images;
   }
 }
