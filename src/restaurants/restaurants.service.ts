@@ -100,6 +100,14 @@ export class RestaurantsService {
   async uploadImages(id, files) {
     const images = await APIFeatures.upload(files);
 
-    return images;
+    const restaurant = await this.restaurantModel.findByIdAndUpdate(
+      id,
+      {
+        images: images as object[],
+      },
+      { new: true, runValidators: true },
+    );
+
+    return restaurant;
   }
 }
