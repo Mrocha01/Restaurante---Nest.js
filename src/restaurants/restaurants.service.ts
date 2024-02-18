@@ -98,6 +98,10 @@ export class RestaurantsService {
 
   // Upload imamges => PUT / restaurants/upload/:id
   async uploadImages(id, files) {
+    if (!files || files.length === 0) {
+      throw new BadRequestException('Please select at least one image.');
+    }
+
     const images = await APIFeatures.upload(files);
 
     const restaurant = await this.restaurantModel.findByIdAndUpdate(
@@ -109,5 +113,14 @@ export class RestaurantsService {
     );
 
     return restaurant;
+  }
+
+  async deleteImages(images) {
+    if (images.length === 0) {
+      return true;
+    }
+    const res = await APIFeatures.deleteImages(images);
+
+    return res;
   }
 }

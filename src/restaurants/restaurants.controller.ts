@@ -49,13 +49,21 @@ export class RestaurantsController {
   }
 
   @Delete(':id')
-  async deleteRestaurant(@Param('id') id: string): Promise<{ deleted: true }> {
-    await this.restaurantsService.getRestaurantById(id);
+  async deleteRestaurant(
+    @Param('id') id: string,
+  ): Promise<{ deleted: boolean }> {
+    const restaurant = await this.restaurantsService.getRestaurantById(id);
 
-    const restaurant = this.restaurantsService.deleteRestaurantById(id);
+    const isDeleted = await this.restaurantsService.deleteImages(
+      restaurant.images,
+    );
 
-    if (restaurant) {
+    if (isDeleted) {
+      this.restaurantsService.deleteRestaurantById(id);
+
       return { deleted: true };
+    } else {
+      return { deleted: false };
     }
   }
 
